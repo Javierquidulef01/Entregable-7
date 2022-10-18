@@ -1,6 +1,6 @@
 import { Cliente } from "./Cliente";
 import { Libro } from "./Libro";
-import { LibroRevista } from "./LibroRevista";
+import { LibroRevista } from './LibroRevista';
 import { Revista } from "./Revista";
 
 export class Libreria {
@@ -8,10 +8,15 @@ export class Libreria {
     private revistas: Revista[];
     private clientes: Cliente[];
 
-    public constructor(libros: Libro[], revistas: Revista[], clientes: Cliente[]) {
+    public constructor(libros: Libro[], revistas: Revista[]) {
         this.libros = libros;
         this.revistas = revistas;
-        this.clientes = clientes;
+        this.clientes = [];
+    }
+
+    public comprarArticulos(cliente: Cliente, articulos: LibroRevista | LibroRevista[]) {
+        cliente.setCompras(articulos);
+        this.setClientes(cliente);
     }
 
     public calcularPrecio(articulo: LibroRevista, cliente: Cliente): number {
@@ -23,8 +28,16 @@ export class Libreria {
     }
 
     public esUnArticuloYaAdquirido(cliente: Cliente, articulo: LibroRevista): boolean {
-        if (this.buscarCliente(cliente)) {
-            return this.buscarArticulo(cliente.getCompras(), articulo);
+        try {
+            let esCliente: boolean = this.buscarCliente(cliente);
+            if (!esCliente) {
+                let mensaje: string = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + "con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
+                throw new Error(mensaje);
+            } else {
+                return this.buscarArticulo(cliente.getCompras(), articulo);
+            }
+        } catch (error) {
+            console.log(error);
         }
         return false;
     }
@@ -86,8 +99,8 @@ export class Libreria {
         return this.clientes;
     }
 
-    public setClientes(clientes: Cliente[]): void {
-        this.clientes = clientes;
+    private setClientes(cliente: Cliente): void {
+        this.clientes.push(cliente);
     }
 
 }

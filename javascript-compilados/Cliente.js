@@ -2,15 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cliente = void 0;
 class Cliente {
-    constructor(nombre, apellido, dni, direccion, autoresFav, generosFav, compras, descuento) {
+    constructor(nombre, apellido, dni, direccion, autoresFav, generosFav, descuento, compras) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.direccion = direccion;
         this.autoresFav = autoresFav;
         this.generosFav = generosFav;
-        this.compras = compras;
         this.descuento = descuento;
+        if (compras == undefined) {
+            this.compras = [];
+        }
+        else {
+            this.compras = compras;
+        }
     }
     getNombre() {
         return this.nombre;
@@ -52,7 +57,14 @@ class Cliente {
         return this.compras;
     }
     setCompras(compras) {
-        this.compras = compras;
+        if (Array.isArray(compras)) {
+            compras.forEach(articulo => {
+                this.compras.push(articulo);
+            });
+        }
+        else {
+            this.compras.push(compras);
+        }
     }
     getDescuento() {
         return this.descuento;

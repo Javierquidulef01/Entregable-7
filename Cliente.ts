@@ -12,7 +12,7 @@ export class Cliente {
 
 
     public constructor(nombre: string, apellido: string, dni: number, direccion: string, 
-        autoresFav: string[], generosFav: string[], compras: LibroRevista[], descuento: number) {
+        autoresFav: string[], generosFav: string[], descuento: number, compras?: LibroRevista[]) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -20,8 +20,12 @@ export class Cliente {
         this.direccion = direccion;
         this.autoresFav = autoresFav;
         this.generosFav = generosFav;
-        this.compras = compras;
         this.descuento = descuento;
+        if (compras == undefined) {
+            this.compras = []
+        } else {
+            this.compras = compras;
+        }
     }
 
     public getNombre(): string {
@@ -76,8 +80,14 @@ export class Cliente {
         return this.compras;
     }
 
-    public setCompras(compras: LibroRevista[]): void {
-        this.compras = compras;
+    public setCompras(compras: LibroRevista | LibroRevista[]): void {
+        if (Array.isArray(compras)) {
+            compras.forEach(articulo => {
+                this.compras.push(articulo);
+            });
+        } else {
+            this.compras.push(compras);
+        }
     }
 
     public getDescuento(): number {

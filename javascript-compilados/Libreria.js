@@ -2,10 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Libreria = void 0;
 class Libreria {
-    constructor(libros, revistas, clientes) {
+    constructor(libros, revistas) {
         this.libros = libros;
         this.revistas = revistas;
-        this.clientes = clientes;
+        this.clientes = [];
+    }
+    comprarArticulos(cliente, articulos) {
+        cliente.setCompras(articulos);
+        this.setClientes(cliente);
     }
     calcularPrecio(articulo, cliente) {
         let descuento = cliente.getDescuento();
@@ -15,8 +19,18 @@ class Libreria {
         return articulo.getPrecio();
     }
     esUnArticuloYaAdquirido(cliente, articulo) {
-        if (this.buscarCliente(cliente)) {
-            return this.buscarArticulo(cliente.getCompras(), articulo);
+        try {
+            let esCliente = this.buscarCliente(cliente);
+            if (!esCliente) {
+                let mensaje = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + "con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
+                throw new Error(mensaje);
+            }
+            else {
+                return this.buscarArticulo(cliente.getCompras(), articulo);
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
         return false;
     }
@@ -68,8 +82,8 @@ class Libreria {
     getClientes() {
         return this.clientes;
     }
-    setClientes(clientes) {
-        this.clientes = clientes;
+    setClientes(cliente) {
+        this.clientes.push(cliente);
     }
 }
 exports.Libreria = Libreria;
