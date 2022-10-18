@@ -30,22 +30,22 @@ export class Libreria {
     }
 
     private buscarCliente(cliente: Cliente): boolean {
-        this.clientes.forEach(clienteExisente => {
-            if (cliente.getDni() == clienteExisente.getDni()) {
-                return true;
-            }
-        });
+        for (let i = 0; i < this.clientes.length; i++) {
+            if(this.clientes[i].getDni() == cliente.getDni()) {
+                return true
+            }         
+        }
         return false;
     }
 
-    private buscarArticulo(comprasCliente: LibroRevista[], articuloBuscado: LibroRevista) {
-        comprasCliente.forEach(articuloComprado => {
-            let autorEncontrado: boolean = articuloComprado.getAutor() == articuloBuscado.getAutor();
-            let nombreEncontrado: boolean = articuloComprado.getNombre() == articuloBuscado.getNombre();
+    private buscarArticulo(comprasCliente: LibroRevista[], articuloBuscado: LibroRevista): boolean {
+        for (let i = 0; i < comprasCliente.length; i++) {
+            let autorEncontrado: boolean = comprasCliente[i].getAutor() == articuloBuscado.getAutor();
+            let nombreEncontrado: boolean = comprasCliente[i].getNombre() == articuloBuscado.getNombre();
             if (autorEncontrado && nombreEncontrado) {
                 return true
             }
-        });
+        }
         return false;
     }
 

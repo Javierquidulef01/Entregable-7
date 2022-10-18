@@ -21,21 +21,21 @@ class Libreria {
         return false;
     }
     buscarCliente(cliente) {
-        this.clientes.forEach(clienteExisente => {
-            if (cliente.getDni() == clienteExisente.getDni()) {
+        for (let i = 0; i < this.clientes.length; i++) {
+            if (this.clientes[i].getDni() == cliente.getDni()) {
                 return true;
             }
-        });
+        }
         return false;
     }
     buscarArticulo(comprasCliente, articuloBuscado) {
-        comprasCliente.forEach(articuloComprado => {
-            let autorEncontrado = articuloComprado.getAutor() == articuloBuscado.getAutor();
-            let nombreEncontrado = articuloComprado.getNombre() == articuloBuscado.getNombre();
+        for (let i = 0; i < comprasCliente.length; i++) {
+            let autorEncontrado = comprasCliente[i].getAutor() == articuloBuscado.getAutor();
+            let nombreEncontrado = comprasCliente[i].getNombre() == articuloBuscado.getNombre();
             if (autorEncontrado && nombreEncontrado) {
                 return true;
             }
-        });
+        }
         return false;
     }
     esGustoDelCliente(libro, autoresFavCliente, generosFavCliente) {
