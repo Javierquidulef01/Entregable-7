@@ -20,7 +20,11 @@ export class Cliente {
         this.direccion = direccion;
         this.autoresFav = autoresFav;
         this.generosFav = generosFav;
-        this.descuento = descuento;
+        if (descuento > 0) {
+            this.descuento = descuento;
+        } else {
+            this.descuento = 0;
+        }
         if (compras == undefined) {
             this.compras = []
         } else {
@@ -80,14 +84,10 @@ export class Cliente {
         return this.compras;
     }
 
-    public setCompras(compras: LibroRevista | LibroRevista[]): void {
-        if (Array.isArray(compras)) {
-            compras.forEach(articulo => {
-                this.compras.push(articulo);
-            });
-        } else {
-            this.compras.push(compras);
-        }
+    public setCompras(compras: LibroRevista[]): void {
+        compras.forEach(articulo => {
+            this.compras.push(articulo);
+        });
     }
 
     public getDescuento(): number {
@@ -95,6 +95,9 @@ export class Cliente {
     }
 
     public setDescuento(descuento: number): void {
+        if (descuento < 0) {
+            this.descuento = 0;
+        }
         this.descuento = descuento;
     }
 

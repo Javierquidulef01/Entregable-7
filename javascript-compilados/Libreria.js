@@ -8,8 +8,22 @@ class Libreria {
         this.clientes = [];
     }
     comprarArticulos(cliente, articulos) {
-        cliente.setCompras(articulos);
-        this.setClientes(cliente);
+        let total = 0;
+        try {
+            if (articulos.length == 0) {
+                let mensaje = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + " con DNI:" + cliente.getDni() + " NO HA ELEGIDO ARTICULOS PARA COMPRAR.";
+                throw new Error(mensaje);
+            }
+            articulos.forEach(articulo => {
+                total += this.calcularPrecio(articulo, cliente);
+            });
+            cliente.setCompras(articulos);
+            this.setClientes(cliente);
+            console.log("\nCliente:" + cliente.getNombre() + " " + cliente.getApellido() + "\tDNI:" + cliente.getDni() + "\nCantidad Articulos: " + articulos.length + "\tTotal a Pagar: $" + total + "\n");
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     calcularPrecio(articulo, cliente) {
         let descuento = cliente.getDescuento();
@@ -22,7 +36,7 @@ class Libreria {
         try {
             let esCliente = this.buscarCliente(cliente);
             if (!esCliente) {
-                let mensaje = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + "con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
+                let mensaje = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + " con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
                 throw new Error(mensaje);
             }
             else {

@@ -45,17 +45,18 @@ console.log(libreria.calcularPrecio(lib1, cliente1));
 console.log();
 
 console.log(libreria.esUnArticuloYaAdquirido(cliente2, lib1)); //no
-libreria.comprarArticulos(cliente2, lib1);
+libreria.comprarArticulos(cliente2, [lib1]);
 console.log(libreria.esUnArticuloYaAdquirido(cliente2, lib1)); //si
 
 console.log();
 
 console.log(libreria.esUnArticuloYaAdquirido(cliente5, rev1)); //no
-libreria.comprarArticulos(cliente5, rev4);
+libreria.comprarArticulos(cliente5, [rev4]);
 console.log(libreria.esUnArticuloYaAdquirido(cliente5, rev4)); //si
 
 let cliente6: Cliente = new Cliente("Mauro", "Martinez", 40000102, "Rivadavia 123", ["Autor2", "Autor3", "Paula"], ["Comedia", "Terror"], 0.30 );
 console.log(libreria.esUnArticuloYaAdquirido(cliente6, lib7)); //no
+libreria.comprarArticulos(cliente6, []);
 
 console.log("gustos del cliente normal");
 console.log(libreria.esGustoDelCliente(lib3, cliente1.getAutoresFav())); //no

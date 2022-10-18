@@ -14,9 +14,25 @@ export class Libreria {
         this.clientes = [];
     }
 
-    public comprarArticulos(cliente: Cliente, articulos: LibroRevista | LibroRevista[]) {
-        cliente.setCompras(articulos);
-        this.setClientes(cliente);
+    public comprarArticulos(cliente: Cliente, articulos: LibroRevista[]): void {
+        let total:number = 0;
+        try {
+            if (articulos.length == 0) {
+                let mensaje: string = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + " con DNI:" + cliente.getDni() + " NO HA ELEGIDO ARTICULOS PARA COMPRAR.";
+                throw new Error(mensaje);
+            } 
+
+            articulos.forEach(articulo => {
+                total += this.calcularPrecio(articulo, cliente);
+            });
+
+            cliente.setCompras(articulos);
+            this.setClientes(cliente);
+            console.log("\nCliente:" + cliente.getNombre() + " " + cliente.getApellido()+ "\tDNI:" + cliente.getDni() + "\nCantidad Articulos: " + articulos.length + "\tTotal a Pagar: $" + total + "\n");
+        } catch (error) {
+            console.log(error);
+        }
+      
     }
 
     public calcularPrecio(articulo: LibroRevista, cliente: Cliente): number {
@@ -31,7 +47,7 @@ export class Libreria {
         try {
             let esCliente: boolean = this.buscarCliente(cliente);
             if (!esCliente) {
-                let mensaje: string = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + "con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
+                let mensaje: string = "EL CLIENTE " + cliente.getNombre() + " " + cliente.getApellido() + " con DNI:" + cliente.getDni() + " NO EXISTE EN EL HISTORIAL DE CLIENTES.";
                 throw new Error(mensaje);
             } else {
                 return this.buscarArticulo(cliente.getCompras(), articulo);

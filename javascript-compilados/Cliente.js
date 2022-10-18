@@ -9,7 +9,12 @@ class Cliente {
         this.direccion = direccion;
         this.autoresFav = autoresFav;
         this.generosFav = generosFav;
-        this.descuento = descuento;
+        if (descuento > 0) {
+            this.descuento = descuento;
+        }
+        else {
+            this.descuento = 0;
+        }
         if (compras == undefined) {
             this.compras = [];
         }
@@ -57,19 +62,17 @@ class Cliente {
         return this.compras;
     }
     setCompras(compras) {
-        if (Array.isArray(compras)) {
-            compras.forEach(articulo => {
-                this.compras.push(articulo);
-            });
-        }
-        else {
-            this.compras.push(compras);
-        }
+        compras.forEach(articulo => {
+            this.compras.push(articulo);
+        });
     }
     getDescuento() {
         return this.descuento;
     }
     setDescuento(descuento) {
+        if (descuento < 0) {
+            this.descuento = 0;
+        }
         this.descuento = descuento;
     }
 }
